@@ -852,6 +852,7 @@ class LeaderboardDB:
                     AND NOT r.secret
                     AND r.score IS NOT NULL
                     AND r.passed
+                    AND COALESCE(s.status, 'active') <> 'hacked'
                     AND s.user_id = %s
                 ORDER BY r.score ASC
                 LIMIT %s OFFSET %s
@@ -874,6 +875,7 @@ class LeaderboardDB:
                     JOIN leaderboard.user_info ui ON s.user_id = ui.id
                     WHERE l.name = %s AND r.runner = %s AND NOT r.secret
                           AND r.score IS NOT NULL AND r.passed
+                          AND COALESCE(s.status, 'active') <> 'hacked'
                     ORDER BY s.user_id, r.score ASC
                 )
                 SELECT
@@ -1250,6 +1252,7 @@ class LeaderboardDB:
                     AND NOT r.secret
                     AND r.score IS NOT NULL
                     AND r.passed
+                    AND COALESCE(s.status, 'active') <> 'hacked'
                     AND s.user_id = %s
                 """
             args = (leaderboard_name, gpu_name, user_id)
@@ -1264,6 +1267,7 @@ class LeaderboardDB:
                     AND NOT r.secret
                     AND r.score IS NOT NULL
                     AND r.passed
+                    AND COALESCE(s.status, 'active') <> 'hacked'
                 """
             args = (leaderboard_name, gpu_name)
 
